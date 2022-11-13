@@ -142,6 +142,7 @@ export class Calculator extends Component {
             label={item}
             onClick={() => {}}
             double={item === "0"}
+            //todo: melhorar isso via css
             operation={
               item === "+" ||
               item === "-" ||
