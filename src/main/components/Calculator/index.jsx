@@ -11,27 +11,46 @@ const initialState = {
   current: 0,
 };
 
+const DIGITS_MAPPING_CALCULATOR = [
+  "/",
+  "7",
+  "8",
+  "9",
+  "*",
+  "4",
+  "5",
+  "6",
+  "-",
+  "1",
+  "2",
+  "3",
+  "+",
+  "0",
+  ".",
+  "=",
+];
+
 const DIGIT = "Digit";
 
-const CALCULATOR_BUTTONS = {
-  [DIGIT + "0"]: DIGIT + "0",
-  [DIGIT + "1"]: DIGIT + "1",
-  [DIGIT + "2"]: DIGIT + "2",
-  [DIGIT + "3"]: DIGIT + "3",
-  [DIGIT + "4"]: DIGIT + "4",
-  [DIGIT + "5"]: DIGIT + "5",
-  [DIGIT + "6"]: DIGIT + "6",
-  [DIGIT + "7"]: DIGIT + "7",
-  [DIGIT + "8"]: DIGIT + "8",
-  [DIGIT + "9"]: DIGIT + "9",
-  [DIGIT + "*"]: DIGIT + "*",
-  [DIGIT + "-"]: DIGIT + "-",
-  [DIGIT + "+"]: DIGIT + "+",
-  [DIGIT + "="]: DIGIT + "=",
-  [DIGIT + "Enter"]: DIGIT + "=",
-  [DIGIT + "."]: DIGIT + ".",
-  [DIGIT + "/"]: DIGIT + "/",
-};
+// const CALCULATOR_BUTTONS = {
+//   [DIGIT + "0"]: DIGIT + "0",
+//   [DIGIT + "1"]: DIGIT + "1",
+//   [DIGIT + "2"]: DIGIT + "2",
+//   [DIGIT + "3"]: DIGIT + "3",
+//   [DIGIT + "4"]: DIGIT + "4",
+//   [DIGIT + "5"]: DIGIT + "5",
+//   [DIGIT + "6"]: DIGIT + "6",
+//   [DIGIT + "7"]: DIGIT + "7",
+//   [DIGIT + "8"]: DIGIT + "8",
+//   [DIGIT + "9"]: DIGIT + "9",
+//   [DIGIT + "*"]: DIGIT + "*",
+//   [DIGIT + "-"]: DIGIT + "-",
+//   [DIGIT + "+"]: DIGIT + "+",
+//   [DIGIT + "="]: DIGIT + "=",
+//   [DIGIT + "Enter"]: DIGIT + "=",
+//   [DIGIT + "."]: DIGIT + ".",
+//   [DIGIT + "/"]: DIGIT + "/",
+// };
 
 export class Calculator extends Component {
   state = { ...initialState };
@@ -90,29 +109,24 @@ export class Calculator extends Component {
   }
 
   componentDidMount() {
-    console.log(CALCULATOR_BUTTONS);
     (() => {
-      function keyPressed(evt) {
-        evt = evt || window.event;
-        console.log(
-          "🚀 ~ file: index.jsx ~ line 96 ~ Calculator ~ keyPressed ~ evt",
-          evt
-        );
-        let key = evt.key || evt.which;
-
-        if (!CALCULATOR_BUTTONS[DIGIT + key]) {
-          return;
-        }
-
-        key = key === "Enter" ? "=" : key;
-
-        document.getElementById(DIGIT + key).click();
-        return String.fromCharCode(key);
-      }
-
-      document.onkeypress = function (evt) {
-        keyPressed(evt);
-      };
+      // function keyPressed(evt) {
+      //   evt = evt || window.event;
+      //   console.log(
+      //     "🚀 ~ file: index.jsx ~ line 96 ~ Calculator ~ keyPressed ~ evt",
+      //     evt
+      //   );
+      //   let key = evt.key || evt.which;
+      //   if (!CALCULATOR_BUTTONS[DIGIT + key]) {
+      //     return;
+      //   }
+      //   key = key === "Enter" ? "=" : key;
+      //   document.getElementById(DIGIT + key).click();
+      //   return String.fromCharCode(key);
+      // }
+      // document.onkeypress = function (evt) {
+      //   keyPressed(evt);
+      // };
     })();
   }
 
@@ -121,93 +135,115 @@ export class Calculator extends Component {
       <div className="calculator">
         <Display value={this.state.displayValue} />
         <Button label="AC" click={this.clearMemory} triple />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}/`]}
-          label="/"
-          operation={true}
-          click={this.setOperation}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}7`]}
-          label="7"
-          click={this.addDigit}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}8`]}
-          label="8"
-          click={this.addDigit}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}9`]}
-          label="9"
-          click={this.addDigit}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}*`]}
-          label="*"
-          click={this.setOperation}
-          operation
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}4`]}
-          label="4"
-          click={this.addDigit}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}5`]}
-          label="5"
-          click={this.addDigit}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}6`]}
-          label="6"
-          click={this.addDigit}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}-`]}
-          label="-"
-          click={this.setOperation}
-          operation
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}1`]}
-          label="1"
-          click={this.addDigit}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}2`]}
-          label="2"
-          click={this.addDigit}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}3`]}
-          label="3"
-          click={this.addDigit}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}+`]}
-          label="+"
-          click={this.setOperation}
-          operation
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}0`]}
-          label="0"
-          click={this.addDigit}
-          double
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}.`]}
-          label="."
-          click={this.addDigit}
-        />
-        <Button
-          id={CALCULATOR_BUTTONS[`${DIGIT}=`]}
-          label="="
-          click={this.setOperation}
-          operation
-        />
+        {DIGITS_MAPPING_CALCULATOR.map((item) => (
+          <Button
+            key={item}
+            id={`${DIGIT}${item}`}
+            label={item}
+            onClick={() => {}}
+            double={item === "0"}
+            operation={
+              item === "+" ||
+              item === "-" ||
+              item === "/" ||
+              item === "*" ||
+              item === "="
+            }
+          />
+        ))}
       </div>
     );
+    //   return (
+    //     <div className="calculator">
+    //       <Display value={this.state.displayValue} />
+    //       <Button label="AC" click={this.clearMemory} triple />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}/`]}
+    //         label="/"
+    //         operation={true}
+    //         click={this.setOperation}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}7`]}
+    //         label="7"
+    //         click={this.addDigit}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}8`]}
+    //         label="8"
+    //         click={this.addDigit}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}9`]}
+    //         label="9"
+    //         click={this.addDigit}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}*`]}
+    //         label="*"
+    //         click={this.setOperation}
+    //         operation
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}4`]}
+    //         label="4"
+    //         click={this.addDigit}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}5`]}
+    //         label="5"
+    //         click={this.addDigit}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}6`]}
+    //         label="6"
+    //         click={this.addDigit}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}-`]}
+    //         label="-"
+    //         click={this.setOperation}
+    //         operation
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}1`]}
+    //         label="1"
+    //         click={this.addDigit}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}2`]}
+    //         label="2"
+    //         click={this.addDigit}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}3`]}
+    //         label="3"
+    //         click={this.addDigit}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}+`]}
+    //         label="+"
+    //         click={this.setOperation}
+    //         operation
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}0`]}
+    //         label="0"
+    //         click={this.addDigit}
+    //         double
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}.`]}
+    //         label="."
+    //         click={this.addDigit}
+    //       />
+    //       <Button
+    //         id={CALCULATOR_BUTTONS[`${DIGIT}=`]}
+    //         label="="
+    //         click={this.setOperation}
+    //         operation
+    //       />
+    //     </div>
+    //   );
   }
 }
